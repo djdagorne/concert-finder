@@ -6,10 +6,6 @@ const artistApiKey = 'cca25a181d5244cbe7e1d7b94d8ce6f4';
 const concertSearchUrl = 'https://app.ticketmaster.com/discovery/v2/events.json';
 const concertApiKey = 'hmha3Dr0BjItrX7K98A1aK2Cxn7Cg2nn';
 
-function displayResults(){
-
-};
-
 function formatQueryParams(artistParams) { //turning an object of key:value pairs into an array, then formatting it into a GET request
     const queryItems = Object.keys(artistParams).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(artistParams[key])}`)
     return queryItems.join('&');
@@ -30,14 +26,14 @@ function getArtistList(searchArtist, searchCity){
 
     fetch(artistUrl)
         .then(response => {
-            console.log('fetching lastFM API response');
+            //console.log('fetching lastFM API response');
             return response.json();
         })
         .then(responseJson =>{
-            console.log(responseJson);
+            //console.log(responseJson);
             if(responseJson.similarartists.artist.length>0){
                 $('#js-error-message').empty();
-                displayArtistList(responseJson);
+                displayArtistList(responseJson, searchCity);
             }else{
                 $('#results').addClass('hidden');
                 $('#results-list').empty();
@@ -50,7 +46,7 @@ function getArtistList(searchArtist, searchCity){
         });
 };
 
-function displayArtistList(responseJson){
+function displayArtistList(responseJson, searchCity){
     console.log('rendering artist list to the DOM based on responseJson')
     $('#results-list').empty();
     const artistList = responseJson.similarartists.artist; //im lazy
@@ -68,23 +64,31 @@ function displayArtistList(responseJson){
             </li>`
     )};
     $('#results').removeClass('hidden');
+    watchArtist(searchCity)
 }
 
-function watchConcertList(){
-    
+function getItemIdFromElement(item) {
+    return $(item)
+        .closest('h3')
+        .val();
+  }
+
+function watchArtist(searchCity){
+    $('#js-concert-expand').on('click', event => {
+        event.preventDefault();
+        console.log('clicking');
+        const artistName = getItemIdFromElement(event.currentTarget);
+        getEventList(artistName, searchCity);
+    });
 }
 
-function getEventList(artistResponseJson, searchCity){
-    
+function getEventList(artistName, searchCity){
 
-    // for(i=0,i<artistListJson.similarArtists.artist.length,i++){
-
-    // };
     const eventParams = {
         classification: 'music',
         apikey: concertApiKey,
-        keyword: 'elvis', //testing
-        //city: searchCity,
+        keyword: artistName, //testing
+        city: searchCity,
         sort: 'date,asc',
     }
     const eventQueryString = formatQueryParams(eventParams);
@@ -105,12 +109,6 @@ function getEventList(artistResponseJson, searchCity){
         });
 };
 
-function getItemIdFromElement(item) {
-    return $(item)
-      .closest('li')
-      .data('item-id');
-  }
-
 function watchForm(){
     $('form').submit(event => {
         event.preventDefault();
@@ -118,15 +116,6 @@ function watchForm(){
         const searchCity = $('#js-search-city').val();
         //console.log('form submitted, ' + searchArtist + " " + searchCity);
         getArtistList(searchArtist, searchCity);
-    });
-
-    $('li').on('click', '#js-concert-expend', event => {
-        event.preventDefault();
-        console.log('clicking');
-        const id = getItemIdFromElement(event.currentTarget);
-        toggleCheckedForListItem(id);
-        renderShoppingList();   
-        //getEventList();
     });
 };
 
