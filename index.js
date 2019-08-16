@@ -1,6 +1,6 @@
 'use strict'
 
-const artistSearchUrl = 'http://ws.audioscrobbler.com/2.0/';
+const artistSearchUrl = 'https://ws.audioscrobbler.com/2.0/';
 const artistApiKey = 'cca25a181d5244cbe7e1d7b94d8ce6f4';
 
 const concertSearchUrl = 'https://app.ticketmaster.com/discovery/v2/events.json';
@@ -42,6 +42,8 @@ function getArtistList(searchArtist, searchCity){
         })
         .catch(err => {
             console.log('this url is throwing an error: ' + err)
+            $('#results').addClass('hidden');
+            $('#results-list').empty();
             $('#js-error-message').text(`Something went wrong: ${err.message}`);
         });
 };
@@ -54,11 +56,12 @@ function displayArtistList(responseJson, searchCity){
         $('#results-list').append(
             `<li class="${artistList[i].name}">
                 <h3>${artistList[i].name}</h3>
-                <a id="${[i]}" class="js-concert-expand" href='#'>Click to see ${artistList[i].name}'s Concerts</a>
-                <section id="concert-results" class="hidden">
+                <a id="${i}" class="js-concert-expand" href='#'>Click to see ${artistList[i].name}'s Concerts</a>
+                <p id="js-${i}-error-message" class="error-message hidden"></p>
+                <section id="${i}-concert-results" class="hidden">
                     <h4>${artistList[i].name} concert results</h4>
-                    <p id="js-concert-error-message" class="error-message hidden"></p>
-                    <ul id="${[i]}-results-list">
+                    
+                    <ul id="${i}-results-list">
                     </ul>
                 </section>
             </li>`
@@ -103,31 +106,36 @@ function getEventList(artistName, searchCity, targetArtist){
         })
         .catch(err => {
             console.log('this url is throwing an error: '  + err.message)
-            $('#js-concert-error-message').text(`Something went wrong: ${err.message}`);
+            if(searchCity == ''){
+                $(`#js-${targetArtist}-error-message`).text(`No concerts found :(`);
+                $(`#js-${targetArtist}-error-message`).removeClass(`hidden`);
+            }else{
+                $(`#js-${targetArtist}-error-message`).text(`No concerts found, try a different city?`);
+                $(`#js-${targetArtist}-error-message`).removeClass(`hidden`);
+            }
         });
 };
 
-function displayEventList(eventJson, searchCity, targetArtist){    
+function displayEventList(eventJson, searchCity, targetArtist){ 
 
-    $('#concert-results').addClass('hidden');
+    $(`#${targetArtist}-concert-results`).addClass('hidden');
     $(`#${targetArtist}-results-list`).empty();
 
     if(eventJson._embedded.events.length>0){ //if the event list is more than 0 items long...
         console.log('successfully found events, updating DOM');
-        for(let i=0;i<eventJson._embedded.events.length;i++){       //make list items for the events using a for loop
+        for(let i=0;i<eventJson._embedded.events.length;i++){       //make list items  the events using a for loop
             $(`#${targetArtist}-results-list`).append(`
-                <li id="event-item-${[i]}"> 
+                <li id="event-item-${i}"> 
                     <a href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name}</a>
                 </li>
             `);
         };        
-        $('#concert-results').removeClass('hidden'); //reveal the event list
+        $(`#${targetArtist}-concert-results`).removeClass('hidden'); //reveal the event list
         
     }else{
-        console.log('no concerts found')
-        $('#concert-results').addClass('hidden');
-        $('#concert-results-list').empty();
-        //throw new Error('No results found.');
+        console.log('no concerts found'); //<p id="js-${i}-error-message" class="error-message hidden"></p>
+        $(`#${targetArtist}-concert-results-list`).empty();
+        $(`#js-${targetArtist}-error-message`).text(`No concerts found, try a different city?`)
     }
 }
 
