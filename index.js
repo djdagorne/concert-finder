@@ -12,8 +12,7 @@ function formatQueryParams(artistParams) { //turning an object of key:value pair
 }
 
 function getArtistList(searchArtist, searchCity){
-    console.log('getting artist list');
-    const artistParams = { //necessary keys for lastfm API
+    const artistParams = { 
         method: 'artist.getSimilar',
         artist: searchArtist,
         api_key: artistApiKey,
@@ -26,11 +25,10 @@ function getArtistList(searchArtist, searchCity){
 
     fetch(artistUrl)
         .then(response => {
-            //console.log('fetching lastFM API response');
             return response.json();
         })
         .then(responseJson =>{
-            //console.log(responseJson);
+            console.log(responseJson);
             if(responseJson.similarartists.artist.length>0){
                 $('#js-error-message').empty();
                 displayArtistList(responseJson, searchCity);
@@ -41,7 +39,7 @@ function getArtistList(searchArtist, searchCity){
             }
         })
         .catch(err => {
-            console.log('this url is throwing an error: ' + err)
+            console.log('this url is throwing an error: ' + err.message)
             $('#results').addClass('hidden');
             $('#results-list').empty();
             $('#js-error-message').text(`Something went wrong: ${err.message}`);
@@ -49,7 +47,6 @@ function getArtistList(searchArtist, searchCity){
 };
 
 function displayArtistList(responseJson, searchCity){
-    console.log('rendering artist list to the DOM based on responseJson')
     $('#results-list').empty();
     const artistList = responseJson.similarartists.artist; //im lazy
     for (let i=0; i < artistList.length; i++){ 
@@ -75,7 +72,6 @@ function watchArtist(searchCity){
         event.preventDefault();
         const artistName = getArtistName(event.currentTarget);
         var targetArtist = $(event.currentTarget).attr("id"); //assigns a number to each targetArtist, so I can accurately update DOM
-        console.log('clicking on ' + targetArtist);
         getEventList(artistName, searchCity, targetArtist);  
     });
 }
@@ -122,7 +118,6 @@ function displayEventList(eventJson, searchCity, targetArtist){
     $(`#${targetArtist}-results-list`).empty();
 
     if(eventJson._embedded.events.length>0){ //if the event list is more than 0 items long...
-        console.log('successfully found events, updating DOM');
         for(let i=0;i<eventJson._embedded.events.length;i++){       //make list items  the events using a for loop
             $(`#${targetArtist}-results-list`).append(`
                 <li id="event-item-${i}"> 
@@ -133,7 +128,6 @@ function displayEventList(eventJson, searchCity, targetArtist){
         $(`#${targetArtist}-concert-results`).removeClass('hidden'); //reveal the event list
         
     }else{
-        console.log('no concerts found'); //<p id="js-${i}-error-message" class="error-message hidden"></p>
         $(`#${targetArtist}-concert-results-list`).empty();
         $(`#js-${targetArtist}-error-message`).text(`No concerts found, try a different city?`)
     }
