@@ -50,15 +50,15 @@ function displayArtistList(responseJson, searchCity){
     console.log('rendering artist list to the DOM based on responseJson')
     $('#results-list').empty();
     const artistList = responseJson.similarartists.artist; //im lazy
-    for (let i=0; i < artistList.length; i++){ ////////////////////////////////////////////////////////////////figure out a naming convention for my id tags
+    for (let i=0; i < artistList.length; i++){ 
         $('#results-list').append(
-            `<li>
+            `<li class="${artistList[i].name}">
                 <h3>${artistList[i].name}</h3>
-                <a id="js-concert-expand" href='#'>${artistList[i].name}'s Concerts</a>
+                <a id="${[i]}" class="js-concert-expand" href='#'>Click to see ${artistList[i].name}'s Concerts</a>
                 <section id="concert-results" class="hidden">
                     <h4>${artistList[i].name} concert results</h4>
                     <p id="js-concert-error-message" class="error-message hidden"></p>
-                    <ul id="${artistList[i].name}-results-list">
+                    <ul id="${[i]}-results-list">
                     </ul>
                 </section>
             </li>`
@@ -67,25 +67,24 @@ function displayArtistList(responseJson, searchCity){
     watchArtist(searchCity)
 }
 
-function getItemIdFromElement(item) {
-    return $(item)
-        .closest('h3')
-        .val();
-  }
-
 function watchArtist(searchCity){
-    $('#js-concert-expand').on('click', event => {
+    $('.js-concert-expand').on('click', event => {
         event.preventDefault();
-        console.log('clicking');
-        const artistName = getItemIdFromElement(event.currentTarget);
-        getEventList(artistName, searchCity);
+        const artistName = getArtistName(event.currentTarget);
+        var targetArtist = $(event.currentTarget).attr("id"); //assigns a number to each targetArtist, so I can accurately update DOM
+        console.log('clicking on ' + targetArtist);
+        getEventList(artistName, searchCity, targetArtist);  
     });
 }
 
-function getEventList(artistName, searchCity){
+function getArtistName(eventTarget) {
+    return $(eventTarget).parent().attr('class');
+}
+
+function getEventList(artistName, searchCity, targetArtist){
 
     const eventParams = {
-        classification: 'music',
+        classificationName: 'music',
         apikey: concertApiKey,
         keyword: artistName, //testing
         city: searchCity,
@@ -96,25 +95,48 @@ function getEventList(artistName, searchCity){
     
     fetch(eventUrl)
         .then(response => {
-            console.log('fetching tmAPI response');
             return response.json();
         })
         .then(responseJson => {
-            console.log('this is our tmAPI reponse');
             console.log(responseJson);
+            displayEventList(responseJson, searchCity, targetArtist); //we have the right responses, we just need to update the correct artists <li> item.
         })
         .catch(err => {
-            console.log('this url is throwing an error: ' + err)
+            console.log('this url is throwing an error: '  + err.message)
             $('#js-concert-error-message').text(`Something went wrong: ${err.message}`);
         });
 };
+
+function displayEventList(eventJson, searchCity, targetArtist){    
+
+    $('#concert-results').addClass('hidden');
+    $(`#${targetArtist}-results-list`).empty();
+
+    if(eventJson._embedded.events.length>0){ //if the event list is more than 0 items long...
+        console.log('successfully found events, updating DOM');
+        for(let i=0;i<eventJson._embedded.events.length;i++){       //make list items for the events using a for loop
+            $(`#${targetArtist}-results-list`).append(`
+                <li id="event-item-${[i]}"> 
+                    <a href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name}</a>
+                </li>
+            `);
+        };        
+        $('#concert-results').removeClass('hidden'); //reveal the event list
+        
+    }else{
+        console.log('no concerts found')
+        $('#concert-results').addClass('hidden');
+        $('#concert-results-list').empty();
+        //throw new Error('No results found.');
+    }
+}
 
 function watchForm(){
     $('form').submit(event => {
         event.preventDefault();
         const searchArtist = $('#js-search-artist').val(); 
         const searchCity = $('#js-search-city').val();
-        //console.log('form submitted, ' + searchArtist + " " + searchCity);
+        
         getArtistList(searchArtist, searchCity);
     });
 };
