@@ -76,16 +76,19 @@ function getItemIdFromElement(item) {
 function watchArtist(searchCity){
     $('#js-concert-expand').on('click', event => {
         event.preventDefault();
-        console.log('clicking');
         const artistName = getItemIdFromElement(event.currentTarget);
+        console.log('artistName of clicked element is: ' + artistName);
         getEventList(artistName, searchCity);
     });
 }
 
 function getEventList(artistName, searchCity){
 
+
+    console.log('searching for '+ artistName + ' in the city of ' + searchCity)
+
     const eventParams = {
-        classification: 'music',
+        classificationName: 'music',
         apikey: concertApiKey,
         keyword: artistName, //testing
         city: searchCity,
@@ -114,7 +117,6 @@ function watchForm(){
         event.preventDefault();
         const searchArtist = $('#js-search-artist').val(); 
         const searchCity = $('#js-search-city').val();
-        //console.log('form submitted, ' + searchArtist + " " + searchCity);
         getArtistList(searchArtist, searchCity);
     });
 };
