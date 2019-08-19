@@ -1,6 +1,6 @@
 'use strict'
 
-const artistSearchUrl = 'http://ws.audioscrobbler.com/2.0/';
+const artistSearchUrl = 'https://ws.audioscrobbler.com/2.0/';
 const artistApiKey = 'cca25a181d5244cbe7e1d7b94d8ce6f4';
 
 const concertSearchUrl = 'https://app.ticketmaster.com/discovery/v2/events.json';
@@ -12,8 +12,7 @@ function formatQueryParams(artistParams) { //turning an object of key:value pair
 }
 
 function getArtistList(searchArtist, searchCity){
-    console.log('getting artist list');
-    const artistParams = { //necessary keys for lastfm API
+    const artistParams = { 
         method: 'artist.getSimilar',
         artist: searchArtist,
         api_key: artistApiKey,
@@ -26,11 +25,10 @@ function getArtistList(searchArtist, searchCity){
 
     fetch(artistUrl)
         .then(response => {
-            //console.log('fetching lastFM API response');
             return response.json();
         })
         .then(responseJson =>{
-            //console.log(responseJson);
+            console.log(responseJson);
             if(responseJson.similarartists.artist.length>0){
                 $('#js-error-message').empty();
                 displayArtistList(responseJson, searchCity);
@@ -41,24 +39,40 @@ function getArtistList(searchArtist, searchCity){
             }
         })
         .catch(err => {
-            console.log('this url is throwing an error: ' + err)
+            console.log('this url is throwing an error: ' + err.message)
+            $('#results').addClass('hidden');
+            $('#results-list').empty();
             $('#js-error-message').text(`Something went wrong: ${err.message}`);
         });
 };
 
 function displayArtistList(responseJson, searchCity){
-    console.log('rendering artist list to the DOM based on responseJson')
     $('#results-list').empty();
+    const origArtist = responseJson.similarartists["@attr"].artist;
     const artistList = responseJson.similarartists.artist; //im lazy
-    for (let i=0; i < artistList.length; i++){ ////////////////////////////////////////////////////////////////figure out a naming convention for my id tags
+    $('#results-list').append(`
+        <li class="${origArtist}">
+            <h3>${origArtist}</h3>
+            <a id="origin" class="js-concert-expand" href='#'>Click to see ${origArtist}'s Concerts</a>
+            <p id="js-origin-error-message" class="error-message hidden"></p>
+            <section id="origin-concert-results" class="hidden">
+                <h4>${origArtist} concert results</h4>
+                
+                <ul id="origin-results-list">
+                </ul>
+            </section>
+        </li>`
+    );
+    for (let i=0; i < artistList.length; i++){ 
         $('#results-list').append(
-            `<li>
+            `<li class="${artistList[i].name}">
                 <h3>${artistList[i].name}</h3>
-                <a id="js-concert-expand" href='#'>${artistList[i].name}'s Concerts</a>
-                <section id="concert-results" class="hidden">
+                <a id="${i}" class="js-concert-expand" href='#'>Click to see ${artistList[i].name}'s Concerts</a>
+                <p id="js-${i}-error-message" class="error-message hidden"></p>
+                <section id="${i}-concert-results" class="hidden">
                     <h4>${artistList[i].name} concert results</h4>
-                    <p id="js-concert-error-message" class="error-message hidden"></p>
-                    <ul id="${artistList[i].name}-results-list">
+                    
+                    <ul id="${i}-results-list">
                     </ul>
                 </section>
             </li>`
@@ -67,25 +81,20 @@ function displayArtistList(responseJson, searchCity){
     watchArtist(searchCity)
 }
 
-function getItemIdFromElement(item) {
-    return $(item)
-        .closest('h3')
-        .val();
-  }
-
 function watchArtist(searchCity){
-    $('#js-concert-expand').on('click', event => {
+    $('.js-concert-expand').on('click', event => {
         event.preventDefault();
-        const artistName = getItemIdFromElement(event.currentTarget);
-        console.log('artistName of clicked element is: ' + artistName);
-        getEventList(artistName, searchCity);
+        const artistName = getArtistName(event.currentTarget);
+        var targetArtist = $(event.currentTarget).attr("id"); //assigns a number to each targetArtist, so I can accurately update DOM
+        getEventList(artistName, searchCity, targetArtist);  
     });
 }
 
-function getEventList(artistName, searchCity){
+function getArtistName(eventTarget) {
+    return $(eventTarget).parent().attr('class');
+}
 
-
-    console.log('searching for '+ artistName + ' in the city of ' + searchCity)
+function getEventList(artistName, searchCity, targetArtist){
 
     const eventParams = {
         classificationName: 'music',
@@ -99,24 +108,54 @@ function getEventList(artistName, searchCity){
     
     fetch(eventUrl)
         .then(response => {
-            console.log('fetching tmAPI response');
             return response.json();
         })
         .then(responseJson => {
-            console.log('this is our tmAPI reponse');
             console.log(responseJson);
+            displayEventList(responseJson, searchCity, targetArtist); //we have the right responses, we just need to update the correct artists <li> item.
         })
         .catch(err => {
-            console.log('this url is throwing an error: ' + err)
-            $('#js-concert-error-message').text(`Something went wrong: ${err.message}`);
+                $(`#js-${targetArtist}-error-message`).text(`Something went wrong: ${err.message}`);
+                $(`#js-${targetArtist}-error-message`).removeClass(`hidden`);
+            
         });
 };
+
+function displayEventList(eventJson, searchCity, targetArtist){ 
+
+    $(`#${targetArtist}-concert-results`).addClass('hidden');
+    $(`#${targetArtist}-results-list`).empty();
+
+    if(eventJson.page.totalElements>0){ //if the event list is more than 0 items long...
+        $(`#js-${targetArtist}-error-message`).addClass(`hidden`);
+        console.log("events found");
+        for(let i=0;i<eventJson._embedded.events.length;i++){       //make list items  the events using a for loop
+            $(`#${targetArtist}-results-list`).append(`
+                <li id="event-item-${i}"> 
+                    <a href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name}</a>
+                </li>
+            `);
+        };        
+        $(`#${targetArtist}-concert-results`).removeClass('hidden'); 
+    }else if(eventJson.page.totalElements == 0 && searchCity != ''){
+        console.log("no events in " + searchCity);
+        $(`#${targetArtist}-concert-results-list`).empty();
+        $(`#js-${targetArtist}-error-message`).text(`No concerts found, try a different city?`);
+        $(`#js-${targetArtist}-error-message`).removeClass(`hidden`);
+    }else if(eventJson.page.totalElements == 0 && searchCity == ''){
+        console.log("no events found in all cities");
+        $(`#${targetArtist}-concert-results-list`).empty();
+        $(`#js-${targetArtist}-error-message`).text(`Artists' events not found.`);
+        $(`#js-${targetArtist}-error-message`).removeClass(`hidden`);
+    }
+}
 
 function watchForm(){
     $('form').submit(event => {
         event.preventDefault();
         const searchArtist = $('#js-search-artist').val(); 
         const searchCity = $('#js-search-city').val();
+        
         getArtistList(searchArtist, searchCity);
     });
 };

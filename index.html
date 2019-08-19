@@ -10,14 +10,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>concert finder</h1>
+        <h1>Concert Finder</h1>
+        <p>find concerts on ticketmaster for searched artist and concerts for similar artists as provided by last.fm</p>
 
         <form id="js-form">
             <label for="search-artist">Search artist name</label>
             <input type="text" name="search-artist" id="js-search-artist" value='Flying Lotus' required>
 
-            <label for="search-city">Maximum results to return</label>
-            <input type="text" name="search-city" id="js-search-city" value="toronto">
+            <label for="search-city">(optional) search city name</label>
+            <input type="text" name="search-city" id="js-search-city" value="">
 
             <input type="submit" value="Go!">
         </form>
