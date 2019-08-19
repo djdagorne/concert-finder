@@ -14,6 +14,7 @@ function formatQueryParams(artistParams) { //turning an object of key:value pair
 function getArtistList(searchArtist, searchCity){
     const artistParams = { 
         method: 'artist.getSimilar',
+        autocorrect: 1,
         artist: searchArtist,
         api_key: artistApiKey,
         format: 'json',
@@ -27,33 +28,33 @@ function getArtistList(searchArtist, searchCity){
         .then(response => {
             return response.json();
         })
-        .then(responseJson =>{
+        .then(responseJson => {
             console.log(responseJson);
-            if(responseJson.similarartists.artist.length>0){
-                $('#js-error-message').empty();
-                displayArtistList(responseJson, searchCity);
-            }else{
-                $('#results').addClass('hidden');
-                $('#results-list').empty();
-                throw new Error('No results found.');
-            }
+            
+            displayArtistList(responseJson, searchCity);
         })
         .catch(err => {
             console.log('this url is throwing an error: ' + err.message)
             $('#results').addClass('hidden');
             $('#results-list').empty();
             $('#js-error-message').text(`Something went wrong: ${err.message}`);
+            $('#js-error-message').removeClass('hidden');
         });
 };
 
 function displayArtistList(responseJson, searchCity){
     $('#results-list').empty();
+    $('#js-error-message').addClass('hidden');
+    if(responseJson.links){//check if its the error response
+        throw new Error(responseJson.message);
+    }
     const origArtist = responseJson.similarartists["@attr"].artist;
-    const artistList = responseJson.similarartists.artist; //im lazy
+    const artistList = responseJson.similarartists.artist; 
+    //placing source artist at top of list
     $('#results-list').append(`
         <li class="${origArtist}">
             <h3>${origArtist}</h3>
-            <a id="origin" class="js-concert-expand" href='#'>Click to see ${origArtist}'s Concerts</a>
+            <p id="origin" class="js-concert-expand" class="linklike">CLICK HERE to see ${origArtist}'s Concerts</a>
             <p id="js-origin-error-message" class="error-message hidden"></p>
             <section id="origin-concert-results" class="hidden">
                 <h4>${origArtist} concert results</h4>
@@ -63,11 +64,11 @@ function displayArtistList(responseJson, searchCity){
             </section>
         </li>`
     );
-    for (let i=0; i < artistList.length; i++){ 
+    for (let i=0; i < artistList.length; i++){ //for loop for all similar artist list generation
         $('#results-list').append(
             `<li class="${artistList[i].name}">
                 <h3>${artistList[i].name}</h3>
-                <a id="${i}" class="js-concert-expand" href='#'>Click to see ${artistList[i].name}'s Concerts</a>
+                <p id="${i}" class="js-concert-expand" class="linklike" >CLICK HERE to see ${artistList[i].name}'s Concerts</a>
                 <p id="js-${i}-error-message" class="error-message hidden"></p>
                 <section id="${i}-concert-results" class="hidden">
                     <h4>${artistList[i].name} concert results</h4>
@@ -128,22 +129,24 @@ function displayEventList(eventJson, searchCity, targetArtist){
 
     if(eventJson.page.totalElements>0){ //if the event list is more than 0 items long...
         $(`#js-${targetArtist}-error-message`).addClass(`hidden`);
-        console.log("events found");
+        //console.log("events found");
         for(let i=0;i<eventJson._embedded.events.length;i++){       //make list items  the events using a for loop
             $(`#${targetArtist}-results-list`).append(`
                 <li id="event-item-${i}"> 
-                    <a href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name}</a>
+                    <a href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name},
+                     on ${eventJson._embedded.events[i].dates.start.localDate}, 
+                     at ${eventJson._embedded.events[i]._embedded.venues[0].name}</a>
                 </li>
             `);
         };        
         $(`#${targetArtist}-concert-results`).removeClass('hidden'); 
     }else if(eventJson.page.totalElements == 0 && searchCity != ''){
-        console.log("no events in " + searchCity);
+        //console.log("no events in " + searchCity);
         $(`#${targetArtist}-concert-results-list`).empty();
         $(`#js-${targetArtist}-error-message`).text(`No concerts found, try a different city?`);
         $(`#js-${targetArtist}-error-message`).removeClass(`hidden`);
     }else if(eventJson.page.totalElements == 0 && searchCity == ''){
-        console.log("no events found in all cities");
+        //console.log("no events found in all cities");
         $(`#${targetArtist}-concert-results-list`).empty();
         $(`#js-${targetArtist}-error-message`).text(`Artists' events not found.`);
         $(`#js-${targetArtist}-error-message`).removeClass(`hidden`);
@@ -155,7 +158,7 @@ function watchForm(){
         event.preventDefault();
         const searchArtist = $('#js-search-artist').val(); 
         const searchCity = $('#js-search-city').val();
-        
+        //console.log(searchArtist + ' ' + searchCity + 'searching stuff')
         getArtistList(searchArtist, searchCity);
     });
 };
