@@ -11,28 +11,27 @@
 <body>
     <header>
             <h1>Concert Finder</h1>
-            <p>find concerts for your favorite artist and similar artists</p>
     </header>
     <main>
-    <div class="container">
-        <form id="js-form">
-            <legend>Concert Finder: Search for an artist, get back similar acts and show dates!</legend>
-            <label for="search-artist">Artist Name</label>
-            <input type="text" name="search-artist" id="js-search-artist" value='Flying Lotus' required>
+        <div class="container">
+            <form id="js-form">
+                <legend>Search for an artist, get back similar acts and show dates!</legend>
+                <label for="search-artist">Artist Name</label>
+                <input type="text" name="search-artist" id="js-search-artist" value='Flying Lotus' required>
 
-            <label for="search-city">City Name</label>
-            <input type="text" name="search-city" id="js-search-city" placeholder="(optional)">
+                <label for="search-city">City Name</label>
+                <input type="text" name="search-city" id="js-search-city" placeholder="(optional)">
 
-            <input type="submit" value="Search!">
-        </form>
+                <input type="submit" value="Search!">
+            </form>
 
-        <p id="js-error-message" class="error-message hidden"></p>
+            <p id="js-error-message" class="error-message hidden"></p>
+        </div>
         <section id="results" class="hidden">
-          <h2>Search results</h2>
-          <ul id="results-list">
-          </ul>
+            <h2>Search results</h2>
+            <ul id="results-list">
+            </ul>
         </section>
-    </div>
     </main>
     <footer>
         <p>made by dexter</p>

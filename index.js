@@ -53,29 +53,31 @@ function displayArtistList(responseJson, searchCity){
     //placing source artist at top of list
     $('#results-list').append(`
         <li class="${origArtist}">
-            <h3>${origArtist}</h3>
-            <p id="origin" class="js-concert-expand" class="linklike">Click to toggle ${origArtist}'s Concerts</a>
-            <p id="js-origin-error-message" class="error-message hidden"></p>
-            <section id="origin-concert-results" class="hidden">
-                <h4>${origArtist} concert results</h4>
-                
-                <ul id="origin-results-list">
-                </ul>
-            </section>
+            <div class="container2">
+                <h3 id="origin" class="js-concert-expand linklike">${origArtist}</h3>
+                <p class="linklike-desc">Click to Toggle List</p>
+                <p id="js-origin-error-message" class="error-message hidden"></p>
+                <section id="origin-concert-results" class="hidden">
+                    <h4>${origArtist} Concert Results</h4>
+                    <ul class="concert-ul" id="origin-results-list">
+                    </ul>
+                </section>
+            </div>
         </li>`
     );
     for (let i=0; i < artistList.length; i++){ //for loop for all similar artist list generation
         $('#results-list').append(
             `<li class="${artistList[i].name}">
-                <h3>${artistList[i].name}</h3>
-                <p id="${i}" class="js-concert-expand" class="linklike" >Click to toggle ${artistList[i].name}'s Concerts</a>
-                <p id="js-${i}-error-message" class="error-message hidden"></p>
-                <section id="${i}-concert-results" class="hidden">
-                    <h4>${artistList[i].name} concert results</h4>
-                    
-                    <ul id="${i}-results-list">
-                    </ul>
-                </section>
+                <div class="container2">
+                    <h3 id="${i}" class="js-concert-expand linklike">${artistList[i].name}</h3>
+                    <p class="linklike-desc">Click to Toggle List</p>
+                    <p id="js-${i}-error-message" class="error-message hidden"></p>
+                    <section id="${i}-concert-results" class="hidden">
+                        <h4>${artistList[i].name} Concert Results</h4>
+                        <ul class="concert-ul" id="${i}-results-list">
+                        </ul>
+                    </section>
+                </div>
             </li>`
     )};
     $('#results').removeClass('hidden');
@@ -92,7 +94,7 @@ function watchArtist(searchCity){
 }
 
 function getArtistName(eventTarget) {
-    return $(eventTarget).parent().attr('class');
+    return $(eventTarget).parent().parent().attr('class');
 }
 
 function getEventList(artistName, searchCity, targetArtist){
@@ -131,7 +133,7 @@ function displayEventList(eventJson, searchCity, targetArtist){
         $(`#js-${targetArtist}-error-message`).addClass(`hidden`);
         for(let i=0;i<eventJson._embedded.events.length;i++){       //success, make list items  the events using a for loop
             $(`#${targetArtist}-results-list`).append(`
-                <li id="event-item-${i}"> 
+                <li class="event-list-item" id="event-item-${i}"> 
                     <a href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name},
                      on ${eventJson._embedded.events[i].dates.start.localDate}, 
                      at ${eventJson._embedded.events[i]._embedded.venues[0].name}</a>

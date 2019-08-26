@@ -1,3 +1,11 @@
+html {
+  box-sizing: border-box;
+  background: #1c56a3;
+  font-family: "Roboto", helvetica, sans-serif;
+  margin: 0;
+  font-size: 18px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -5,22 +13,133 @@
 body {
   font-family: 'Roboto', sans-serif; 
 }
-
-button, input[type="text"] {
-  padding: 4px;
+ul{
+  list-style-type: none;
+  padding-inline-start: 0px;
 }
 
-button:hover {
-  cursor: pointer;
+li p{
+  font-size:18px;
+  margin: auto;
+  text-align: center;
+}
+
+h1 , h2 {
+  text-align: center;
+  color: white;
+}
+
+li h3 {
+  font-size:20px;
+  font-weight: 700;
+  margin: auto;
+  text-align: center;
+}
+
+li h4 {
+  font-size:18px;
+  text-align: center;
+}
+
+.concert-ul {
+  list-style: square inside;
+  font-size: 16px;
 }
 
 .container {
-  max-width: 600px;
-  margin: 0 auto;
+  display: border-box;
+  padding: 20px;
+  width: 66%;
+  background: white;
+  margin: auto;
+  border-radius: 3px;
+}
+
+.container2 {
+  display: border-box;
+  padding: 10px;
+  width: 66%;
+  background: white;
+  margin: 10px auto 0px auto;
+  border-radius: 3px;
+}
+
+.container2:hover,
+.container2:focus {
+  background: rgb(212, 211, 211);
+  -webkit-transition: background 0.1s;
+  -moz-transition: background 0.1s;
+  -o-transition: background 0.1s;
+  transition: background 0.1s;
+}
+
+legend{
+  font-size: 25px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="submit"]{
+  display: block;
+  width: 320px;
+  border: 2px solid #e7e7e7;
+  padding: 15px;
+  border-radius: 3px;
+  font-size: 18px;
+  text-align: left;
+  background: #fcfcfc;
+  margin: 10px auto 20px;
+  transition: opacity 0.4s;
+}
+
+input[type="submit"] {
+  height:auto;
+  width: 270PX;
+  text-align: center;
+  margin-top: 15px;
+  color: #fcfcfc;
+  background-color: #15CD72;
+  border: 0;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  background-color: #0CB863;
+  -webkit-transition: background 0.1s;
+  -moz-transition: background 0.1s;
+  -o-transition: background 0.1s;
+  transition: background 0.1s;
 }
 
 .error-message {
     color: red;
+}
+
+.linklike {
+  color: blue;
+  font-weight: 500;
+}
+
+.linklike-desc {
+  font-weight: 100;
+  font-size: 12px;
+}
+
+.linklike:hover {
+  cursor:pointer;
 }
 
 .hidden {
