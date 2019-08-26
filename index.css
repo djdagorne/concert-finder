@@ -1,7 +1,5 @@
 html {
   box-sizing: border-box;
-  /* background: rgb(92,7,83);
-  background: linear-gradient(180deg, rgba(92,7,83,1) 0%, rgba(97,9,121,1) 35%, rgba(0,212,255,1) 100%);*/
   font-family: "Open Sans";
   margin: 0;
   font-size: 18px;
@@ -24,7 +22,7 @@ body:before{
 	bottom: 0;
   width: 100%;
 	z-index: -1;
-	background: linear-gradient(to right bottom, #B721FF, #2AF598, #21D4FD 75%);
+	background: linear-gradient(to right bottom, #B721FF, rgb(32, 190, 119), rgb(26, 173, 206) 75%);
 }
 
 header {
