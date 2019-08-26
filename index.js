@@ -37,7 +37,7 @@ function getArtistList(searchArtist, searchCity){
             //console.log('this url is throwing an error: ' + err.message)
             $('#results').addClass('hidden');
             $('#results-list').empty();
-            $('#js-error-message').text(`Something went wrong: ${err.message}`);
+            $('#js-error-message').text(`Uh oh: ${err.message}`);
             $('#js-error-message').removeClass('hidden');
         });
 };
@@ -53,12 +53,11 @@ function displayArtistList(responseJson, searchCity){
     //placing source artist at top of list
     $('#results-list').append(`
         <li class="${origArtist}">
-            <div class="container2">
-                <h3 id="origin" class="js-concert-expand linklike">${origArtist}</h3>
+            <div id="origin" class="container2 js-concert-expand">
+                <h3 class="linklike">${origArtist}</h3>
                 <p class="linklike-desc">Click to Toggle List</p>
                 <p id="js-origin-error-message" class="error-message hidden"></p>
-                <section id="origin-concert-results" class="hidden">
-                    <h4>${origArtist} Concert Results</h4>
+                <section id="origin-concert-results" class="concert-results hidden">
                     <ul class="concert-ul" id="origin-results-list">
                     </ul>
                 </section>
@@ -68,12 +67,11 @@ function displayArtistList(responseJson, searchCity){
     for (let i=0; i < artistList.length; i++){ //for loop for all similar artist list generation
         $('#results-list').append(
             `<li class="${artistList[i].name}">
-                <div class="container2">
-                    <h3 id="${i}" class="js-concert-expand linklike">${artistList[i].name}</h3>
+                <div id="${i}" class="js-concert-expand container2">
+                    <h3 class="linklike">${artistList[i].name}</h3>
                     <p class="linklike-desc">Click to Toggle List</p>
                     <p id="js-${i}-error-message" class="error-message hidden"></p>
-                    <section id="${i}-concert-results" class="hidden">
-                        <h4>${artistList[i].name} Concert Results</h4>
+                    <section id="${i}-concert-results" class="concert-results hidden">
                         <ul class="concert-ul" id="${i}-results-list">
                         </ul>
                     </section>
@@ -94,7 +92,7 @@ function watchArtist(searchCity){
 }
 
 function getArtistName(eventTarget) {
-    return $(eventTarget).parent().parent().attr('class');
+    return $(eventTarget).parent().attr('class');
 }
 
 function getEventList(artistName, searchCity, targetArtist){
@@ -118,7 +116,7 @@ function getEventList(artistName, searchCity, targetArtist){
             displayEventList(responseJson, searchCity, targetArtist); //we have the right responses, we just need to update the correct artists <li> item.
         })
         .catch(err => {
-                $(`#js-${targetArtist}-error-message`).text(`Something went wrong: ${err.message}`);
+                $(`#js-${targetArtist}-error-message`).text(`Uh oh: ${err.message}`);
                 $(`#js-${targetArtist}-error-message`).removeClass(`hidden`);
             
         });
@@ -134,9 +132,7 @@ function displayEventList(eventJson, searchCity, targetArtist){
         for(let i=0;i<eventJson._embedded.events.length;i++){       //success, make list items  the events using a for loop
             $(`#${targetArtist}-results-list`).append(`
                 <li class="event-list-item" id="event-item-${i}"> 
-                    <a href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name},
-                     on ${eventJson._embedded.events[i].dates.start.localDate}, 
-                     at ${eventJson._embedded.events[i]._embedded.venues[0].name}</a>
+                    <a href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name}, on ${eventJson._embedded.events[i].dates.start.localDate}, at ${eventJson._embedded.events[i]._embedded.venues[0].name}</a>
                 </li>
             `);
         };        

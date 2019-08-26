@@ -5,30 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concert Finder</title>
     <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Open+San&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="index.js"></script>
 </head>
 <body>
     <header>
-            <h1>Concert Finder</h1>
+            <h1>SHOWSCOUTER</h1>
+            <h2>Search for an artist, get back similar acts and show dates!</h2>
     </header>
     <main>
         <div class="container">
             <form id="js-form">
-                <legend>Search for an artist, get back similar acts and show dates!</legend>
                 <label for="search-artist">Artist Name</label>
                 <input type="text" name="search-artist" id="js-search-artist" value='Flying Lotus' required>
 
                 <label for="search-city">City Name</label>
                 <input type="text" name="search-city" id="js-search-city" placeholder="(optional)">
 
-                <input type="submit" value="Search!">
+                <input type="submit" value="Search">
             </form>
 
             <p id="js-error-message" class="error-message hidden"></p>
         </div>
         <section id="results" class="hidden">
-            <h2>Search results</h2>
+            <h2>Search Results</h2>
             <ul id="results-list">
             </ul>
         </section>
