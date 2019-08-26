@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>concert finder</title>
+    <title>Concert Finder</title>
     <link rel="stylesheet" href="index.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
 </head>
 <body>
+    <header>
+            <h1>Concert Finder</h1>
+            <p>find concerts for your favorite artist and similar artists</p>
+    </header>
+    <main>
     <div class="container">
-        <h1>Concert Finder</h1>
-        <p>find concerts for your favorite artist and similar artists</p>
-
         <form id="js-form">
-            <label for="search-artist">Search artist name</label>
+            <legend>Concert Finder: Search for an artist, get back similar acts and show dates!</legend>
+            <label for="search-artist">Artist Name</label>
             <input type="text" name="search-artist" id="js-search-artist" value='Flying Lotus' required>
 
-            <label for="search-city">(optional) search city name</label>
-            <input type="text" name="search-city" id="js-search-city" value="">
+            <label for="search-city">City Name</label>
+            <input type="text" name="search-city" id="js-search-city" placeholder="(optional)">
 
-            <input type="submit" value="Go!">
+            <input type="submit" value="Search!">
         </form>
 
         <p id="js-error-message" class="error-message hidden"></p>
@@ -30,6 +33,9 @@
           </ul>
         </section>
     </div>
-    <script src="index.js"></script>
+    </main>
+    <footer>
+        <p>made by dexter</p>
+    </footer>
 </body>
 </html>

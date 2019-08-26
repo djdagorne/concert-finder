@@ -29,12 +29,12 @@ function getArtistList(searchArtist, searchCity){
             return response.json();
         })
         .then(responseJson => {
-            console.log(responseJson);
+            //console.log(responseJson);
             
             displayArtistList(responseJson, searchCity);
         })
         .catch(err => {
-            console.log('this url is throwing an error: ' + err.message)
+            //console.log('this url is throwing an error: ' + err.message)
             $('#results').addClass('hidden');
             $('#results-list').empty();
             $('#js-error-message').text(`Something went wrong: ${err.message}`);
@@ -54,7 +54,7 @@ function displayArtistList(responseJson, searchCity){
     $('#results-list').append(`
         <li class="${origArtist}">
             <h3>${origArtist}</h3>
-            <p id="origin" class="js-concert-expand" class="linklike">CLICK HERE to see ${origArtist}'s Concerts</a>
+            <p id="origin" class="js-concert-expand" class="linklike">Click to toggle ${origArtist}'s Concerts</a>
             <p id="js-origin-error-message" class="error-message hidden"></p>
             <section id="origin-concert-results" class="hidden">
                 <h4>${origArtist} concert results</h4>
@@ -68,7 +68,7 @@ function displayArtistList(responseJson, searchCity){
         $('#results-list').append(
             `<li class="${artistList[i].name}">
                 <h3>${artistList[i].name}</h3>
-                <p id="${i}" class="js-concert-expand" class="linklike" >CLICK HERE to see ${artistList[i].name}'s Concerts</a>
+                <p id="${i}" class="js-concert-expand" class="linklike" >Click to toggle ${artistList[i].name}'s Concerts</a>
                 <p id="js-${i}-error-message" class="error-message hidden"></p>
                 <section id="${i}-concert-results" class="hidden">
                     <h4>${artistList[i].name} concert results</h4>
@@ -112,7 +112,7 @@ function getEventList(artistName, searchCity, targetArtist){
             return response.json();
         })
         .then(responseJson => {
-            console.log(responseJson);
+            //console.log(responseJson);
             displayEventList(responseJson, searchCity, targetArtist); //we have the right responses, we just need to update the correct artists <li> item.
         })
         .catch(err => {
@@ -124,13 +124,12 @@ function getEventList(artistName, searchCity, targetArtist){
 
 function displayEventList(eventJson, searchCity, targetArtist){ 
 
-    $(`#${targetArtist}-concert-results`).addClass('hidden');
+    //$(`#${targetArtist}-concert-results`).toggleClass('hidden');
     $(`#${targetArtist}-results-list`).empty();
 
     if(eventJson.page.totalElements>0){ //if the event list is more than 0 items long...
         $(`#js-${targetArtist}-error-message`).addClass(`hidden`);
-        //console.log("events found");
-        for(let i=0;i<eventJson._embedded.events.length;i++){       //make list items  the events using a for loop
+        for(let i=0;i<eventJson._embedded.events.length;i++){       //success, make list items  the events using a for loop
             $(`#${targetArtist}-results-list`).append(`
                 <li id="event-item-${i}"> 
                     <a href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name},
@@ -139,17 +138,15 @@ function displayEventList(eventJson, searchCity, targetArtist){
                 </li>
             `);
         };        
-        $(`#${targetArtist}-concert-results`).removeClass('hidden'); 
-    }else if(eventJson.page.totalElements == 0 && searchCity != ''){
-        //console.log("no events in " + searchCity);
+        $(`#${targetArtist}-concert-results`).toggleClass('hidden'); 
+    }else if(eventJson.page.totalElements == 0 && searchCity != ''){ //no concerts with city searched
         $(`#${targetArtist}-concert-results-list`).empty();
         $(`#js-${targetArtist}-error-message`).text(`No concerts found, try a different city?`);
-        $(`#js-${targetArtist}-error-message`).removeClass(`hidden`);
-    }else if(eventJson.page.totalElements == 0 && searchCity == ''){
-        //console.log("no events found in all cities");
+        $(`#js-${targetArtist}-error-message`).toggleClass(`hidden`);
+    }else if(eventJson.page.totalElements == 0 && searchCity == ''){ //no concerts no city
         $(`#${targetArtist}-concert-results-list`).empty();
         $(`#js-${targetArtist}-error-message`).text(`Artists' events not found.`);
-        $(`#js-${targetArtist}-error-message`).removeClass(`hidden`);
+        $(`#js-${targetArtist}-error-message`).toggleClass(`hidden`);
     }
 }
 
@@ -158,7 +155,6 @@ function watchForm(){
         event.preventDefault();
         const searchArtist = $('#js-search-artist').val(); 
         const searchCity = $('#js-search-city').val();
-        //console.log(searchArtist + ' ' + searchCity + 'searching stuff')
         getArtistList(searchArtist, searchCity);
     });
 };
