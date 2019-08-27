@@ -1,7 +1,7 @@
 html {
   box-sizing: border-box;
   font-family: "Open Sans";
-  margin: 0;
+  margin: auto;
   font-size: 18px;
 }
 
@@ -11,8 +11,9 @@ html {
 
 body {
   font-family: 'Open Sans', sans-serif; 
-  margin: 0px;
+  margin: auto;
 	background-size: 100%;
+  align-items: center;
 }
 
 body:before{
@@ -29,6 +30,10 @@ header {
   margin-top: 100px; 
 }
 
+main{
+  margin: 0 auto;
+}
+
 #results {
   margin-top: 30px;
 }
@@ -37,6 +42,7 @@ footer {
   color: white;
   position: relative;
   text-align: center;
+  margin-top:10px;
 }
 
 ul{
@@ -50,16 +56,22 @@ li p{
   text-align: center;
 }
 
+li a {
+  font-size:14px;
+}
+
 h1{
   font-family: 'Noto Sans';
-  font-size:48px;
+  font-size:12vw;
   text-align: center;
   color: white;
+  margin: auto;
   margin-bottom:0px;
+  box-sizing: border-box;
 }
 
 h2 {
-  font-size:18px;
+  font-size:5vw;
   text-align: center;
   color: white;
   align-content: center;
@@ -101,26 +113,22 @@ li h4 {
 .concert-results{
   margin-top: 10px;
 }
-
 .event-list-item{
   margin: 5px 0px 5px 0px;
   text-align: center;
 }
 
 .container {
-  display: border-box;
   padding: 20px;
-  width: 66%;
-  background: white;
+  width: 76%;
   margin: auto;
   margin-top: 35px;
   border-radius: 3px;
 }
 
 .container2 {
-  display: border-box;
   padding: 10px;
-  width: 66%;
+  width: 76%;
   background: white;
   margin: 10px auto 0px auto;
   border-radius: 3px;
@@ -158,7 +166,7 @@ label {
 input[type="text"],
 input[type="submit"]{
   display: block;
-  width: 320px;
+  width: 87%;
   border: 2px solid #e7e7e7;
   padding: 12px;
   border-radius: 3px;
@@ -171,7 +179,7 @@ input[type="submit"]{
 
 input[type="submit"] {
   height:auto;
-  width: 320px;
+  width: 87%;
   text-align: center;
   margin-top: 15px;
   color: #fcfcfc;
@@ -211,3 +219,96 @@ input[type="submit"]:focus {
 .hidden {
   display: none;
 }
+
+h5{
+  color:white;
+  margin-bottom:5px;
+}
+
+footer a{
+  display:inline-block;
+}
+
+footer a, a:visited, a:hover{
+  color: white;
+  font-size:28px;
+  margin: 3px;
+  margin-bottom:10px;
+}
+
+ @media screen and (min-width: 725px) {
+  h1 {
+    font-family: 'Noto Sans';
+    font-size:11vw;
+    text-align: center;
+    color: white;
+    margin: auto;
+    margin-bottom:0px;
+    box-sizing: border-box;
+  }
+
+  h2 {
+    font-size:3vw;
+    text-align: center;
+    color: white;
+    align-content: center;
+    margin: auto;
+    margin-top:5px;
+    margin-bottom:35px;
+    width:90%;
+  }
+
+  #js-form{
+    align-content:space-around;
+  }
+
+  .name-section{
+    width:50%;
+    margin-left:auto;
+    margin-right:auto;
+    display: inline-block;
+  }
+
+  .city-section{
+    width: 49%;
+    display: inline-block;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  legend{
+    font-size: 25px;
+    margin-bottom: 25px;
+    text-align: center;
+    width:55%;
+  }
+  
+  label {
+    position:relative;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  input[type="text"]{
+    position: relative;
+    border: 2px solid #e7e7e7;
+    padding: 12px;
+    border-radius: 3px;
+    font-size: 18px;
+    text-align: center;
+    background: #fcfcfc;
+    margin: 10px auto 20px;
+  }
+  
+  input[type="submit"]{
+    display: block;
+    width: 55%;
+  }
+}
+/*
+@media screen and (max-width: 720px) {
+
+} */
