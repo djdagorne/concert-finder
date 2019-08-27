@@ -16,7 +16,7 @@ body {
   align-items: center;
 }
 
-body:before{
+body:before{                          /* background gradient shenanighans */
 	content:'';
 	position: fixed;
 	top: 0;
@@ -155,6 +155,7 @@ legend{
 }
 
 label {
+  color:white;
   display: block;
   text-align: center;
   margin-top: 15px;
@@ -206,6 +207,13 @@ input[type="submit"]:focus {
   color: red;
 }
 
+.container .error-message{
+  text-align: center;
+  background-color:white;
+  padding:5px;
+  border-radius:3px;
+}
+
 .linklike {
   margin-top:4px;
   font-weight: 700;
@@ -229,7 +237,7 @@ footer a{
   display:inline-block;
 }
 
-footer a, a:visited, a:hover{
+footer a, footer a:visited, footer a:hover{
   color: white;
   font-size:28px;
   margin: 3px;
@@ -308,7 +316,3 @@ footer a, a:visited, a:hover{
     width: 55%;
   }
 }
-/*
-@media screen and (max-width: 720px) {
-
-} */

@@ -29,12 +29,9 @@ function getArtistList(searchArtist, searchCity){
             return response.json();
         })
         .then(responseJson => {
-            //console.log(responseJson);
-            
             displayArtistList(responseJson, searchCity);
         })
         .catch(err => {
-            //console.log('this url is throwing an error: ' + err.message)
             $('#results').addClass('hidden');
             $('#results-list').empty();
             $('#js-error-message').text(`Uh oh: ${err.message}`);
@@ -45,7 +42,7 @@ function getArtistList(searchArtist, searchCity){
 function displayArtistList(responseJson, searchCity){
     $('#results-list').empty();
     $('#js-error-message').addClass('hidden');
-    if(responseJson.links){//check if its the error response
+    if(responseJson.links){//check if its the last.fm API error response
         throw new Error(responseJson.message);
     }
     const origArtist = responseJson.similarartists["@attr"].artist;
@@ -92,7 +89,7 @@ function watchArtist(searchCity){
 }
 
 function getArtistName(eventTarget) {
-    return $(eventTarget).parent().attr('class');
+    return $(eventTarget).parent().attr('class'); 
 }
 
 function getEventList(artistName, searchCity, targetArtist){
@@ -124,12 +121,11 @@ function getEventList(artistName, searchCity, targetArtist){
 
 function displayEventList(eventJson, searchCity, targetArtist){ 
 
-    //$(`#${targetArtist}-concert-results`).toggleClass('hidden');
     $(`#${targetArtist}-results-list`).empty();
 
     if(eventJson.page.totalElements>0){ //if the event list is more than 0 items long...
         $(`#js-${targetArtist}-error-message`).addClass(`hidden`);
-        for(let i=0;i<eventJson._embedded.events.length;i++){       //success, make list items  the events using a for loop
+        for(let i=0;i<eventJson._embedded.events.length;i++){       //make list items for each of the events using a for loop
             $(`#${targetArtist}-results-list`).append(`
                 <li class="event-list-item" id="event-item-${i}"> 
                     <a href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name}, on ${eventJson._embedded.events[i].dates.start.localDate}, at ${eventJson._embedded.events[i]._embedded.venues[0].name}</a>
