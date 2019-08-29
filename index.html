@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concert Finder</title>
+     <link rel="icon" href="images/music-icon.png"> <!--favicon is 'Music' by Oksana Latysheva from the Noun Project -->
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Open+San&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
@@ -13,20 +14,22 @@
 <body>
     <header>
             <h1>CONCERTFINDER</h1>
-            <h2>Search for an artist, get back similar acts and show dates!</h2>
     </header>
     <main>
         <div class="container">
             <form id="js-form">
-                <section class="name-section">
-                    <label for="search-artist">Artist Name</label>
-                    <input type="text" name="search-artist" id="js-search-artist" placeholder="See who's touring!" required>
-                </section>
-                <section class="city-section">
-                    <label for="search-city">City Name</label>
-                    <input type="text" name="search-city" id="js-search-city" placeholder="(optional)">
-                </section>
-                <input type="submit" value="Search">
+                <fieldset>
+                    <legend>Search for an artist, get back similar acts and show dates!</legend>
+                    <section class="name-section">
+                        <label for="search-artist">Artist Name*</label>
+                        <input type="text" name="search-artist" id="js-search-artist" placeholder="(required)" required>
+                    </section>
+                    <section class="city-section">
+                        <label for="search-city">City Name</label>
+                        <input type="text" name="search-city" id="js-search-city" placeholder="(optional)">
+                    </section>
+                    <input type="submit" value="Search">
+                </fieldset>
             </form>
 
             <p id="js-error-message" class="error-message hidden"></p>
@@ -39,9 +42,9 @@
     </main>
     <footer>
         <h5>Contact Me @</h5>
-        <a href="mailto:dj.dagorne@gmail.com"><span alt="email me here" class="fas fa-envelope-square 2x"></span></a>
-        <a href="https://github.com/djdagorne"><span alt="check my github here" class="fab fa-github-square 2x"></span></a>
-        <a href="https://www.linkedin.com/in/dexter-dagorne-81461a18a/"><span alt="check my linkedin here" class="fab fa-linkedin 2x"></span></a>
+        <a href="mailto:dj.dagorne@gmail.com" target="_blank"><span alt="email me here" class="fas fa-envelope-square 2x"></span></a>
+        <a href="https://github.com/djdagorne" target="_blank"><span alt="check my github here" class="fab fa-github-square 2x"></span></a>
+        <a href="https://www.linkedin.com/in/dexter-dagorne-81461a18a/" target="_blank"><span alt="check my linkedin here" class="fab fa-linkedin 2x"></span></a>
     </footer>
 </body>
 </html>

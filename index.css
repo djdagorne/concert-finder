@@ -1,6 +1,6 @@
 html {
   box-sizing: border-box;
-  font-family: "Open Sans";
+  font-family: 'Open Sans', sans-serif;
   margin: auto;
   font-size: 18px;
 }
@@ -16,7 +16,7 @@ body {
   align-items: center;
 }
 
-body:before{                          /* background gradient shenanighans */
+body:before {                          /* background gradient shenanighans */
 	content:'';
 	position: fixed;
 	top: 0;
@@ -27,10 +27,10 @@ body:before{                          /* background gradient shenanighans */
 }
 
 header {
-  margin-top: 100px; 
+  margin-top: 15vh; 
 }
 
-main{
+main {
   margin: 0 auto;
 }
 
@@ -45,12 +45,12 @@ footer {
   margin-top:10px;
 }
 
-ul{
+ul {
   list-style-type: none;
   padding-inline-start: 0px;
 }
 
-li p{
+li p {
   font-size:18px;
   margin: auto;
   text-align: center;
@@ -60,7 +60,7 @@ li a {
   font-size:14px;
 }
 
-h1{
+h1 {
   font-family: 'Noto Sans';
   font-size:12vw;
   text-align: center;
@@ -72,13 +72,30 @@ h1{
 
 h2 {
   font-size:5vw;
+  font-family: 'Open Sans', sans-serif;
   text-align: center;
   color: white;
   align-content: center;
   margin: auto;
-  margin-top:5px;
-  margin-bottom:35px;
-  width:55%;
+  margin-top:10px;
+  margin-bottom:15px;
+}
+
+legend {
+  font-size:5vw;
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  color: white;
+  align-content: center;
+  margin: auto;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+fieldset {
+  margin:auto;
+  padding:0px;
+  border:none;
 }
 
 h3 {
@@ -110,19 +127,19 @@ li h4 {
   font-size: 16px;
 }
 
-.concert-results{
+.concert-results {
   margin-top: 10px;
 }
-.event-list-item{
+
+.event-list-item {
   margin: 5px 0px 5px 0px;
   text-align: center;
 }
 
 .container {
-  padding: 20px;
-  width: 76%;
+  width: 86%;
   margin: auto;
-  margin-top: 35px;
+  margin-top: 10px;
   border-radius: 3px;
 }
 
@@ -134,24 +151,8 @@ li h4 {
   border-radius: 3px;
 }
 
-.container2:hover {
+.js-concert-expand:hover {
   cursor:pointer;
-}
-
-.container2:hover,
-.container2:focus {
-  background: rgb(230, 228, 228);
-  -webkit-transition: background 0.1s;
-  -moz-transition: background 0.1s;
-  -o-transition: background 0.1s;
-  transition: background 0.1s;
-}
-
-legend{
-  font-size: 25px;
-  margin-bottom: 25px;
-  text-align: center;
-  width:55%;
 }
 
 label {
@@ -165,7 +166,7 @@ label {
 }
 
 input[type="text"],
-input[type="submit"]{
+input[type="submit"] {
   display: block;
   width: 87%;
   border: 2px solid #e7e7e7;
@@ -189,7 +190,7 @@ input[type="submit"] {
   cursor: pointer;
   font-size: 22px;
   font-weight: 600;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 input[type="submit"]:hover,
@@ -207,7 +208,7 @@ input[type="submit"]:focus {
   color: red;
 }
 
-.container .error-message{
+.container .error-message {
   text-align: center;
   background-color:white;
   padding:5px;
@@ -233,18 +234,22 @@ h5{
   margin-bottom:5px;
 }
 
-footer a{
+footer a {
   display:inline-block;
 }
 
-footer a, footer a:visited, footer a:hover{
+footer a, footer a:visited, footer a:hover {
   color: white;
   font-size:28px;
   margin: 3px;
   margin-bottom:10px;
 }
 
- @media screen and (min-width: 725px) {
+@media screen and (min-width: 725px) {
+  header {
+    margin-top:20vh;
+  }
+
   h1 {
     font-family: 'Noto Sans';
     font-size:11vw;
@@ -255,40 +260,33 @@ footer a, footer a:visited, footer a:hover{
     box-sizing: border-box;
   }
 
-  h2 {
+  legend {
     font-size:3vw;
     text-align: center;
     color: white;
     align-content: center;
     margin: auto;
-    margin-top:5px;
-    margin-bottom:35px;
+    margin-top:10px;
+    margin-bottom:10px;
     width:90%;
   }
 
-  #js-form{
+  #js-form {
     align-content:space-around;
   }
 
-  .name-section{
+  .name-section {
     width:50%;
     margin-left:auto;
     margin-right:auto;
     display: inline-block;
   }
 
-  .city-section{
+  .city-section {
     width: 49%;
     display: inline-block;
     margin-left:auto;
     margin-right:auto;
-  }
-
-  legend{
-    font-size: 25px;
-    margin-bottom: 25px;
-    text-align: center;
-    width:55%;
   }
   
   label {
@@ -300,7 +298,7 @@ footer a, footer a:visited, footer a:hover{
     font-weight: 700;
   }
 
-  input[type="text"]{
+  input[type="text"] {
     position: relative;
     border: 2px solid #e7e7e7;
     padding: 12px;
@@ -311,7 +309,7 @@ footer a, footer a:visited, footer a:hover{
     margin: 10px auto 20px;
   }
   
-  input[type="submit"]{
+  input[type="submit"] {
     display: block;
     width: 55%;
   }
