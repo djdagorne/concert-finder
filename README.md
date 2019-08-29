@@ -17,10 +17,10 @@ Thanks for your time!
 ## Screenshots
 
 Home Screen
-![Home Screen](imgs/main-screen.png)
+![Home Screen](imgs/main-screen.PNG)
 
 Search Example
-![Search Results](search-screen.png)
+![Search Results](search-screen.PNG)
 
 ## Built with  
 
