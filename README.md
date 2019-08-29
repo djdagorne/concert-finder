@@ -4,7 +4,7 @@
 
 Find new artists and even more shows. You decide the artist and place.
 
-https://djdagorne.github.io/concert-finder/
+https://djdagorne.github.io/concertfinder/
 
 ## Concept
 
