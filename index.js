@@ -51,7 +51,7 @@ function displayArtistList(responseJson, searchCity){
     $('#results-list').append(`
         <li class="${origArtist}">
             <div id="origin" class="container2">
-                <h3 class="linklike  js-concert-expand">${origArtist}</h3>
+                <h3 class="js-concert-expand">${origArtist}</h3>
                 <p class="linklike-desc">Click to Toggle List</p>
                 <p id="js-origin-error-message" class="error-message hidden"></p>
                 <section id="origin-concert-results" class="concert-results hidden">
@@ -65,7 +65,7 @@ function displayArtistList(responseJson, searchCity){
         $('#results-list').append(
             `<li class="${artistList[i].name}">
                 <div id="${i}" class="container2">
-                    <h3 class="linklike  js-concert-expand">${artistList[i].name}</h3>
+                    <h3 class="js-concert-expand">${artistList[i].name}</h3>
                     <p class="linklike-desc">Click to Toggle List</p>
                     <p id="js-${i}-error-message" class="error-message hidden"></p>
                     <section id="${i}-concert-results" class="concert-results hidden">
