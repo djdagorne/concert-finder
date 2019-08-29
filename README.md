@@ -20,7 +20,7 @@ Home Screen
 ![Home Screen](imgs/main-screen.PNG)
 
 Search Example
-![Search Results](search-screen.PNG)
+![Search Results](imgs/search-screen.PNG)
 
 ## Built with  
 
