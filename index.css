@@ -150,11 +150,16 @@ li h4 {
   transition: background 0.1s;
 }
 
+fieldset {
+  border-style: none;
+}
+
 legend {
+  display: block;
   font-size: 25px;
+  color: white;
   margin-bottom: 25px;
   text-align: center;
-  width: 55%;
 }
 
 label {
