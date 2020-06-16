@@ -50,8 +50,8 @@ function displayArtistList(responseJson, searchCity){
     //placing source artist at top of list
     $('#results-list').append(`
         <li class="${origArtist}">
-            <div id="origin" class="container2 js-concert-expand">
-                <h3 class="linklike">${origArtist}</h3>
+            <div id="origin" class="container2">
+                <h3 class="js-concert-expand">${origArtist}</h3>
                 <p class="linklike-desc">Click to Toggle List</p>
                 <p id="js-origin-error-message" class="error-message hidden"></p>
                 <section id="origin-concert-results" class="concert-results hidden">
@@ -64,8 +64,8 @@ function displayArtistList(responseJson, searchCity){
     for (let i=0; i < artistList.length; i++){ //for loop for all similar artist list generation
         $('#results-list').append(
             `<li class="${artistList[i].name}">
-                <div id="${i}" class="js-concert-expand container2">
-                    <h3 class="linklike">${artistList[i].name}</h3>
+                <div id="${i}" class="container2">
+                    <h3 class="js-concert-expand">${artistList[i].name}</h3>
                     <p class="linklike-desc">Click to Toggle List</p>
                     <p id="js-${i}-error-message" class="error-message hidden"></p>
                     <section id="${i}-concert-results" class="concert-results hidden">
@@ -81,15 +81,15 @@ function displayArtistList(responseJson, searchCity){
 
 function watchArtist(searchCity){
     $('.js-concert-expand').on('click', event => {
-        event.preventDefault();
+        //event.preventDefault();
         const artistName = getArtistName(event.currentTarget);
-        var targetArtist = $(event.currentTarget).attr("id"); //assigns a number to each targetArtist, so I can accurately update DOM
+        var targetArtist = $(event.currentTarget).parent().attr("id"); //assigns a number to each targetArtist, so I can accurately update DOM
         getEventList(artistName, searchCity, targetArtist);  
     });
 }
 
 function getArtistName(eventTarget) {
-    return $(eventTarget).parent().attr('class'); 
+    return $(eventTarget).text(); 
 }
 
 function getEventList(artistName, searchCity, targetArtist){
@@ -97,7 +97,7 @@ function getEventList(artistName, searchCity, targetArtist){
     const eventParams = {
         classificationName: 'music',
         apikey: concertApiKey,
-        keyword: artistName, //testing
+        keyword: artistName,
         city: searchCity,
         sort: 'date,asc',
     }
@@ -109,7 +109,6 @@ function getEventList(artistName, searchCity, targetArtist){
             return response.json();
         })
         .then(responseJson => {
-            //console.log(responseJson);
             displayEventList(responseJson, searchCity, targetArtist); //we have the right responses, we just need to update the correct artists <li> item.
         })
         .catch(err => {
@@ -128,7 +127,7 @@ function displayEventList(eventJson, searchCity, targetArtist){
         for(let i=0;i<eventJson._embedded.events.length;i++){       //make list items for each of the events using a for loop
             $(`#${targetArtist}-results-list`).append(`
                 <li class="event-list-item" id="event-item-${i}"> 
-                    <a href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name}, on ${eventJson._embedded.events[i].dates.start.localDate}, at ${eventJson._embedded.events[i]._embedded.venues[0].name}</a>
+                    <a target="_blank" href="${eventJson._embedded.events[i].url}">${eventJson._embedded.events[i].name}, on ${eventJson._embedded.events[i].dates.start.localDate}, in ${eventJson._embedded.events[i]._embedded.venues[0].city.name}</a>
                 </li>
             `);
         };        
@@ -139,7 +138,7 @@ function displayEventList(eventJson, searchCity, targetArtist){
         $(`#js-${targetArtist}-error-message`).toggleClass(`hidden`);
     }else if(eventJson.page.totalElements == 0 && searchCity == ''){ //no concerts no city
         $(`#${targetArtist}-concert-results-list`).empty();
-        $(`#js-${targetArtist}-error-message`).text(`Artists' events not found.`);
+        $(`#js-${targetArtist}-error-message`).text(`Artists' tour information not available.`);
         $(`#js-${targetArtist}-error-message`).toggleClass(`hidden`);
     }
 }

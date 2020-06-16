@@ -4,7 +4,7 @@
 
 Find new artists and even more shows. You decide the artist and place.
 
-https://djdagorne.github.io/concert-finder/
+https://djdagorne.github.io/concertfinder/
 
 ## Concept
 
@@ -17,10 +17,10 @@ Thanks for your time!
 ## Screenshots
 
 Home Screen
-![Home Screen](imgs/main-screen.png)
+![Home Screen](imgs/main-screen.PNG)
 
 Search Example
-![Search Results](search-screen.png)
+![Search Results](imgs/search-screen.PNG)
 
 ## Built with  
 
