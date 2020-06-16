@@ -10,27 +10,30 @@ html {
 }
 
 body {
-  font-family: 'Open Sans', sans-serif; 
+  font-family: "Open Sans", sans-serif;
   margin: auto;
-	background-size: 100%;
   align-items: center;
 }
 
-body:before{                          /* background gradient shenanighans */
-	content:'';
-	position: fixed;
-	top: 0;
-	bottom: 0;
+body:before {
+  /* background gradient shenanighans */
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
   width: 100%;
-	z-index: -1;
-	background: linear-gradient(to right bottom, #B721FF, rgb(32, 190, 119), rgb(26, 173, 206) 75%);
+  height: 100%;
+  z-index: -1;
+  background: url(https://edmchicago.com/wp-content/uploads/2016/04/concert.jpg);
+  filter: contrast(55%) brightness(33%);
+  background-size: cover;
 }
 
 header {
-  margin-top: 100px; 
+  margin-top: 100px;
 }
 
-main{
+main {
   margin: 0 auto;
 }
 
@@ -42,58 +45,58 @@ footer {
   color: white;
   position: relative;
   text-align: center;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
-ul{
+ul {
   list-style-type: none;
   padding-inline-start: 0px;
 }
 
-li p{
-  font-size:18px;
+li p {
+  font-size: 18px;
   margin: auto;
   text-align: center;
 }
 
 li a {
-  font-size:14px;
+  font-size: 14px;
 }
 
-h1{
-  font-family: 'Noto Sans';
-  font-size:12vw;
+h1 {
+  font-family: "Noto Sans";
+  font-size: 12vw;
   text-align: center;
   color: white;
   margin: auto;
-  margin-bottom:0px;
+  margin-bottom: 0px;
   box-sizing: border-box;
 }
 
 h2 {
-  font-size:5vw;
+  font-size: 5vw;
   text-align: center;
   color: white;
   align-content: center;
   margin: auto;
-  margin-top:5px;
-  margin-bottom:35px;
-  width:55%;
+  margin-top: 5px;
+  margin-bottom: 35px;
+  width: 55%;
 }
 
 h3 {
-  font-size:18px;
+  font-size: 18px;
   text-align: center;
   color: white;
   align-content: center;
   margin: auto;
-  margin-top:5px;
-  margin-bottom:35px;
-  width:55%;
+  margin-top: 5px;
+  margin-bottom: 35px;
+  width: 55%;
 }
 
 li h3 {
-  font-size:20px;
+  font-size: 20px;
   color: black;
   font-weight: 700;
   margin: auto;
@@ -101,7 +104,7 @@ li h3 {
 }
 
 li h4 {
-  font-size:18px;
+  font-size: 18px;
   text-align: center;
 }
 
@@ -110,10 +113,10 @@ li h4 {
   font-size: 16px;
 }
 
-.concert-results{
+.concert-results {
   margin-top: 10px;
 }
-.event-list-item{
+.event-list-item {
   margin: 5px 0px 5px 0px;
   text-align: center;
 }
@@ -135,7 +138,7 @@ li h4 {
 }
 
 .container2:hover {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .container2:hover,
@@ -147,15 +150,15 @@ li h4 {
   transition: background 0.1s;
 }
 
-legend{
+legend {
   font-size: 25px;
   margin-bottom: 25px;
   text-align: center;
-  width:55%;
+  width: 55%;
 }
 
 label {
-  color:white;
+  color: white;
   display: block;
   text-align: center;
   margin-top: 15px;
@@ -165,7 +168,7 @@ label {
 }
 
 input[type="text"],
-input[type="submit"]{
+input[type="submit"] {
   display: block;
   width: 87%;
   border: 2px solid #e7e7e7;
@@ -179,7 +182,7 @@ input[type="submit"]{
 }
 
 input[type="submit"] {
-  height:auto;
+  height: auto;
   width: 87%;
   text-align: center;
   margin-top: 15px;
@@ -202,20 +205,20 @@ input[type="submit"]:focus {
 }
 
 .error-message {
-  margin-top:6px;
+  margin-top: 6px;
   font-size: 16px;
   color: red;
 }
 
-.container .error-message{
+.container .error-message {
   text-align: center;
-  background-color:white;
-  padding:5px;
-  border-radius:3px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 3px;
 }
 
 .linklike {
-  margin-top:4px;
+  margin-top: 4px;
   font-weight: 700;
 }
 
@@ -228,71 +231,73 @@ input[type="submit"]:focus {
   display: none;
 }
 
-h5{
-  color:white;
-  margin-bottom:5px;
-}
-
-footer a{
-  display:inline-block;
-}
-
-footer a, footer a:visited, footer a:hover{
+h5 {
   color: white;
-  font-size:28px;
-  margin: 3px;
-  margin-bottom:10px;
+  margin-bottom: 5px;
 }
 
- @media screen and (min-width: 725px) {
+footer a {
+  display: inline-block;
+}
+
+footer a,
+footer a:visited,
+footer a:hover {
+  color: white;
+  font-size: 28px;
+  margin: 3px;
+  margin-bottom: 10px;
+}
+
+@media screen and (min-width: 725px) {
   h1 {
-    font-family: 'Noto Sans';
-    font-size:11vw;
+    font-family: "Noto Sans";
+    font-size: 11vw;
     text-align: center;
     color: white;
     margin: auto;
-    margin-bottom:0px;
+    margin-bottom: 0px;
     box-sizing: border-box;
   }
 
   h2 {
-    font-size:3vw;
+    font-size: 3vw;
     text-align: center;
     color: white;
     align-content: center;
     margin: auto;
-    margin-top:5px;
-    margin-bottom:35px;
-    width:90%;
+    margin-top: 5px;
+    margin-bottom: 35px;
+    width: 90%;
   }
 
-  #js-form{
-    align-content:space-around;
+  #js-form {
+    align-content: space-around;
   }
 
-  .name-section{
-    width:50%;
-    margin-left:auto;
-    margin-right:auto;
+  .name-section {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
     display: inline-block;
   }
 
-  .city-section{
+  .city-section {
     width: 49%;
     display: inline-block;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  legend{
+  legend {
     font-size: 25px;
     margin-bottom: 25px;
     text-align: center;
-    width:55%;
+    width: 55%;
   }
-  
+
   label {
-    position:relative;
+    position: relative;
     text-align: center;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -300,7 +305,7 @@ footer a, footer a:visited, footer a:hover{
     font-weight: 700;
   }
 
-  input[type="text"]{
+  input[type="text"] {
     position: relative;
     border: 2px solid #e7e7e7;
     padding: 12px;
@@ -310,8 +315,8 @@ footer a, footer a:visited, footer a:hover{
     background: #fcfcfc;
     margin: 10px auto 20px;
   }
-  
-  input[type="submit"]{
+
+  input[type="submit"] {
     display: block;
     width: 55%;
   }
